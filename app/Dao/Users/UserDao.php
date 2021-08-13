@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Dao\Users;
-
+ 
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +17,8 @@ class UserDao implements UserDaoInterface
      */
     public function getUserList()
     {
-        $users = User::orderBy('id', 'desc')->paginate(config('constants.paginate.user'));
-
+        // $users = User::orderBy('id', 'desc')->paginate(config('constants.paginate.user'));
+        $users = User::orderBy('id', 'desc')->get();
         return $users;
     }
 
@@ -30,19 +30,19 @@ class UserDao implements UserDaoInterface
     }
 
     public function store($request){
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->type = $request->type;
-        $user->phone = $request->phone;
-        $user->dob = $request->dob;
-        $user->address = $request->address;
-        $user->profile = $request->profile;
-        $user->created_user_id = auth()->user()->id;
-        $user->updated_user_id = auth()->user()->id;
-        $user->save();
-
+        // $user = new User;
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password = Hash::make($request->password);
+        // $user->type = $request->type;
+        // $user->phone = $request->phone;
+        // $user->dob = $request->dob;
+        // $user->address = $request->address;
+        // $user->profile = $request->profile;
+        // $user->created_user_id = auth()->user()->id;
+        // $user->updated_user_id = auth()->user()->id;
+        // $user->save();
+        $user = User::create($request->post());
         return $user;
     }
 
@@ -59,30 +59,31 @@ class UserDao implements UserDaoInterface
         return $user;
     }
 
-    public function update($request, $id)
+    public function update($request, $user)
     {
-        $user = User::find($id);
+        // $user = User::find($id);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->type = $request->type;
-        $user->phone = $request->phone;
-        $user->dob = $request->dob;
-        $user->address = $request->address;
-        $user->profile = $request->profile;
-        $user->updated_user_id = auth()->user()->id;
-        $user->save();
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password = $request->password;
+        // $user->type = $request->type;
+        // $user->phone = $request->phone;
+        // $user->dob = $request->dob;
+        // $user->address = $request->address;
+        // $user->profile = $request->profile;
+        // $user->updated_user_id = auth()->user()->id;
+        // $user->save();
+        $user->fill($request->post())->save();
 
         return $user;
     }
-
-    public function destroy($id)
+ 
+    public function destroy($user)
     {
-        $user = User::find($id);
+        // $user = User::find($id);
 
-        $user->deleted_user_id = Auth::user()->id;
-        $user->save;
+        // $user->deleted_user_id = Auth::user()->id;
+        // $user->save;
 
         $user->delete();
 

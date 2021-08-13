@@ -25,7 +25,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = $this->postService->getPostList();
-
+ 
         return response()->json($posts);
     }
 
@@ -120,7 +120,7 @@ class PostController extends Controller
 
         return response()->json([
             'message'=>'post Updated Successfully!!',
-            'post'=>$post
+            'post'=>$post 
         ]);
         // return redirect()->route('posts.index')->with('success','Post updated successfully');
     }

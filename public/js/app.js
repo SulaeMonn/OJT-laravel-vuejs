@@ -1864,6 +1864,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -1992,6 +1993,18 @@ var PostEdit = function PostEdit() {
   return __webpack_require__.e(/*! import() */ "resources_js_components_post_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/post/Edit.vue */ "./resources/js/components/post/Edit.vue"));
 };
 
+var UserList = function UserList() {
+  return __webpack_require__.e(/*! import() */ "resources_js_components_user_List_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/user/List.vue */ "./resources/js/components/user/List.vue"));
+};
+
+var UserCreate = function UserCreate() {
+  return __webpack_require__.e(/*! import() */ "resources_js_components_user_Add_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/user/Add.vue */ "./resources/js/components/user/Add.vue"));
+};
+
+var UserEdit = function UserEdit() {
+  return __webpack_require__.e(/*! import() */ "resources_js_components_user_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/user/Edit.vue */ "./resources/js/components/user/Edit.vue"));
+};
+
 var routes = [{
   name: 'home',
   path: '/',
@@ -2020,6 +2033,18 @@ var routes = [{
   name: 'postEdit',
   path: '/post/:id/edit',
   component: PostEdit
+}, {
+  name: 'userList',
+  path: '/users',
+  component: UserList
+}, {
+  name: 'userAdd',
+  path: '/user/add',
+  component: UserCreate
+}, {
+  name: 'userEdit',
+  path: '/user/:id/edit',
+  component: UserEdit
 }];
 
 /***/ }),
@@ -37540,6 +37565,15 @@ var render = function() {
                     attrs: { "exact-active-class": "active", to: "/posts" }
                   },
                   [_vm._v("Post")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "nav-item nav-link",
+                    attrs: { "exact-active-class": "active", to: "/users" }
+                  },
+                  [_vm._v("Users")]
                 )
               ],
               1
@@ -52983,7 +53017,7 @@ Vue.compile = compileToFunctions;
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resource/js/components/welcome":1,"resource/js/components/category/list":1,"resource/js/components/category/add":1,"resource/js/components/category/edit":1,"resources_js_components_post_List_vue":1,"resources_js_components_post_Add_vue":1,"resources_js_components_post_Edit_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resource/js/components/welcome":1,"resource/js/components/category/list":1,"resource/js/components/category/add":1,"resource/js/components/category/edit":1,"resources_js_components_post_List_vue":1,"resources_js_components_post_Add_vue":1,"resources_js_components_post_Edit_vue":1,"resources_js_components_user_List_vue":1,"resources_js_components_user_Add_vue":1,"resources_js_components_user_Edit_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

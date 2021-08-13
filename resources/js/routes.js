@@ -5,6 +5,9 @@ const CategoryEdit = () => import('./components/category/Edit.vue' /* webpackChu
 const PostList = () => import('./components/post/List.vue')
 const PostCreate = () => import('./components/post/Add.vue')
 const PostEdit = () => import('./components/post/Edit.vue')
+const UserList = () => import('./components/user/List.vue')
+const UserCreate = () => import('./components/user/Add.vue')
+const UserEdit = () => import('./components/user/Edit.vue')
 
 export const routes = [
     {
@@ -41,5 +44,20 @@ export const routes = [
         name: 'postEdit',
         path: '/post/:id/edit',
         component: PostEdit
+    },
+    {
+        name: 'userList',
+        path: '/users',
+        component: UserList
+    },
+    {
+        name: 'userAdd',
+        path: '/user/add',
+        component: UserCreate
+    },
+    {
+        name: 'userEdit',
+        path: '/user/:id/edit',
+        component: UserEdit
     },
 ]

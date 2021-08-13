@@ -16,16 +16,17 @@ class UserController extends Controller
     public function __construct(UserServiceInterface $userService)
     {
         $this->userService = $userService;
-        $this->middleware('auth');  
+        // $this->middleware('auth');  
     }
     
     public function index()
     {
-        if(Gate::allows('admin')) {
+        // if(Gate::allows('admin')) {
             $users = $this->userService->getUserList();
 
-            return view('users.index',compact('users'));
-        }
+            // return view('users.index',compact('users'));
+            return response()->json($users);
+        // }
     }
 
     public function search(Request $request){
@@ -36,11 +37,12 @@ class UserController extends Controller
         
     }
 
-    public function show($id)
+    public function show(User $user)
     {
-        $user = $this->userService->show($id);
-
-        return view('users.show', compact('user'));
+        // $user = $this->userService->show($id);
+ 
+        // return view('users.show', compact('user'));
+        return response()->json($user);
     }
 
     public function create(Request $request)
@@ -102,12 +104,16 @@ class UserController extends Controller
 
         return view('users.confirm',compact('name','email','password','password_confirmation','type','phone','dob','address','profile'));
     }
-    
+     
     public function store(Request $request)
     {
         $user = $this->userService->store($request);
 
-        return redirect()->route('users.index')->with('success','User created successfully.');
+        return response()->json([
+            'message'=>'User Created Successfully!!',
+            'user'=>$user
+        ]);
+        // return redirect()->route('users.index')->with('success','User created successfully.');
     }
 
     public function edit(Request $request, $id)
@@ -181,17 +187,25 @@ class UserController extends Controller
         return view('users.editconfirm',compact('user','name','email','password','type','phone','dob','address','profile'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request,User $user)
     {
-        $user = $this->userService->update($request, $id);
+        $user = $this->userService->update($request, $user);
 
-        return redirect()->route('users.index')->with('success','User updated successfully');
+        return response()->json([
+            'message'=>'user Updated Successfully!!',
+            'user'=>$user 
+        ]);
+
+        // return redirect()->route('users.index')->with('success','User updated successfully');
     }
-
-    public function destroy($id)
+ 
+    public function destroy(User $user)
     {
-        $user = $this->userService->destroy($id);
+        $user = $this->userService->destroy($user);
 
-         return redirect()->route('users.index')->with('success','User deleted successfully');
+        return response()->json([
+            'message'=>'User Deleted Successfully!!'
+        ]);
+        //  return redirect()->route('users.index')->with('success','User deleted successfully');
     }
 }
