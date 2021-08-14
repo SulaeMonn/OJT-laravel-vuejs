@@ -51,7 +51,7 @@ export default {
     },
     methods:{
         async create(){
-            await this.axios.post('/api/users/store',this.user)
+            await this.axios.post('/api/user',this.user)
             .then(response=>{
                 this.$router.push({name:"userList"})
             }).catch(error=>{

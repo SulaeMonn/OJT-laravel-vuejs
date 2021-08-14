@@ -90,7 +90,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.axios.post('/api/users/store', _this.user).then(function (response) {
+                return _this.axios.post('/api/user', _this.user).then(function (response) {
                   _this.$router.push({
                     name: "userList"
                   });

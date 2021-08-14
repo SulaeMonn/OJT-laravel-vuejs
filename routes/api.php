@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::resource('post',PostController::class)->only(['index','store','show','update','destroy']);
+Route::resource('user',UserController::class)->only(['index','store','show','update','destroy']);
 
 // Route::get('/', 'PostController@index');
 
@@ -34,23 +35,23 @@ Route::resource('post',PostController::class)->only(['index','store','show','upd
 // Route::post('import', 'PostController@import')->name('import');
 // Route::get('posts-upload', 'PostController@upload')->name('posts.upload');
 
-Route::get('users', 'UserController@index')->name('users.index');
-Route::get('users/create', 'UserController@create')->name('users.create');
-Route::post('users/create', 'UserController@create')->name('users.create');
-Route::post('users/store', 'UserController@store')->name('users.store');
-Route::get('users/{id}/show', 'UserController@show')->name('users.show');
-Route::post('users/confirm', 'UserController@confirm')->name('users.confirm');
-Route::get('users/{id}/edit', 'UserController@edit')->name('users.edit');
-Route::post('users/{id}/edit', 'UserController@edit')->name('users.edit');
-Route::post('users/{id}/editconfirm', 'UserController@editconfirm')->name('users.editconfirm');
-Route::post('users/{id}/update', 'UserController@update')->name('users.update');
-Route::post('users/{id}/destroy', 'UserController@destroy')->name('users.destroy');
-Route::post('users/search', 'UserController@search')->name('users.search');
+// Route::get('users', 'UserController@index')->name('users.index');
+// Route::get('users/create', 'UserController@create')->name('users.create');
+// Route::post('users/create', 'UserController@create')->name('users.create');
+// Route::post('users/store', 'UserController@store')->name('users.store');
+// Route::get('users/{id}/show', 'UserController@show')->name('users.show');
+// Route::post('users/confirm', 'UserController@confirm')->name('users.confirm');
+// Route::get('users/{id}/edit', 'UserController@edit')->name('users.edit');
+// Route::post('users/{id}/edit', 'UserController@edit')->name('users.edit');
+// Route::post('users/{id}/editconfirm', 'UserController@editconfirm')->name('users.editconfirm');
+// Route::post('users/{id}/update', 'UserController@update')->name('users.update');
+// Route::post('users/{id}/destroy', 'UserController@destroy')->name('users.destroy');
+// Route::post('users/search', 'UserController@search')->name('users.search');
 
-Route::get('change-password/{id}', 'ChangePasswordController@index');
-Route::post('change-password/{id}', 'ChangePasswordController@store')->name('change.password');
+// Route::get('change-password/{id}', 'ChangePasswordController@index');
+// Route::post('change-password/{id}', 'ChangePasswordController@store')->name('change.password');
 
-Route::get('/email', 'EmailController@create');
-Route::post('/email', 'EmailController@sendEmail')->name('send.email');
+// Route::get('/email', 'EmailController@create');
+// Route::post('/email', 'EmailController@sendEmail')->name('send.email');
 
 

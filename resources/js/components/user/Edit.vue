@@ -55,7 +55,7 @@ export default {
     },
     methods:{
         async showUser(){
-            await this.axios.get(`/api/users/${this.$route.params.id}`).then(response=>{
+            await this.axios.get(`/api/user/${this.$route.params.id}`).then(response=>{
                 const { name, email, phone } = response.data
                 this.user.name = name
                 this.user.email = email
@@ -65,7 +65,7 @@ export default {
             })
         },
         async update(){
-            await this.axios.post(`/api/users/${this.$route.params.id}`,this.user).then(response=>{
+            await this.axios.post(`/api/user/${this.$route.params.id}`,this.user).then(response=>{
                 this.$router.push({name:"userList"})
             }).catch(error=>{
                 console.log(error)

@@ -137,7 +137,7 @@ export default {
     methods: {
         async getUsers() {
             await this.axios
-                .get("/api/users")
+                .get("/api/user")
                 .then(response => {
                     this.users = response.data;
                 })
@@ -149,7 +149,7 @@ export default {
         deleteuser(id) {
             if (confirm("Are you sure to delete this user ?")) {
                 this.axios
-                    .delete(`/api/users/${id}/destroy`)
+                    .delete(`/api/user/${id}`)
                     .then(response => {
                         this.getUsers();
                     })

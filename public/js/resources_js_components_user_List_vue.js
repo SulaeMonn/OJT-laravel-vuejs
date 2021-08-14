@@ -175,7 +175,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.axios.get("/api/users").then(function (response) {
+                return _this.axios.get("/api/user").then(function (response) {
                   _this.users = response.data;
                 })["catch"](function (error) {
                   console.log(error);
@@ -194,7 +194,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       if (confirm("Are you sure to delete this user ?")) {
-        this.axios["delete"]("/api/users/".concat(id, "/destroy")).then(function (response) {
+        this.axios["delete"]("/api/user/".concat(id)).then(function (response) {
           _this2.getUsers();
         })["catch"](function (error) {
           console.log(error);
