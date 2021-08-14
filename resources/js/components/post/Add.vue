@@ -44,7 +44,7 @@ export default {
     },
     methods:{
         async create(){
-            await this.axios.post('/api/posts',this.post)
+            await this.axios.post('/api/post',this.post)
             .then(response=>{
                 this.$router.push({name:"postList"})
             }).catch(error=>{

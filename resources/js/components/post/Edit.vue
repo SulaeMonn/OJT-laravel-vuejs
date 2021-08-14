@@ -48,7 +48,7 @@ export default {
     },
     methods:{
         async showPost(){
-            await this.axios.get(`/api/posts/${this.$route.params.id}`).then(response=>{
+            await this.axios.get(`/api/post/${this.$route.params.id}`).then(response=>{
                 const { title, description } = response.data
                 this.post.title = title
                 this.post.description = description
@@ -57,7 +57,7 @@ export default {
             })
         },
         async update(){
-            await this.axios.post(`/api/posts/${this.$route.params.id}`,this.post).then(response=>{
+            await this.axios.post(`/api/post/${this.$route.params.id}`,this.post).then(response=>{
                 this.$router.push({name:"postList"})
             }).catch(error=>{
                 console.log(error)

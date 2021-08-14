@@ -135,7 +135,7 @@ export default {
     methods: {
         async getPosts() {
             await this.axios
-                .get("/api/posts")
+                .get("/api/post")
                 .then(response => {
                     this.posts = response.data;
                 })
@@ -147,7 +147,7 @@ export default {
         deletepost(id) {
             if (confirm("Are you sure to delete this post ?")) {
                 this.axios
-                    .delete(`/api/posts/${id}`)
+                    .delete(`/api/post/${id}`)
                     .then(response => {
                         this.getPosts();
                     })
