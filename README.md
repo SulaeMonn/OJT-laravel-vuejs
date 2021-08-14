@@ -1,4 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
@@ -7,54 +7,32 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-# Getting started
+# SCM BulletinBoard
+  Simple SCM BulletinBoard OJT project with laravel+vuejs
 
-## Installation
+## Contents
+* Users page
+* Post page
 
-Please check the official laravel installation guide for server requirements before you start. [Official Documentation](https://laravel.com/docs/8.x/installation)
+## Users
+* Include Add, Update, Delete, Search and show all user data 
 
-Clone the repository
+## Post
+* Include Add, Update, Delete, Search and show all posts
 
-https://github.com/SulaeMonn/OJT-laravel-vuejs.git
+## User profile
+* Show login user profile (name, email, type, profile, etc.)
 
-Switch to the repo folder
+## Setup
+* Clone https://github.com/SulaeMonn/OJT-Laravel7.git
+* To run the project
+```
+php artisan migrate
+php artisan db:seed
+php artisan serve
+```
+You can now access the server at http://localhost:8000
 
-    cd OJT-Laravel7
-
-Install all the dependencies using composer
-
-    composer install
-
-Copy the example env file and make the required configuration changes in the .env file
-
-    cp .env.example .env
-
-Generate a new application key
-
-    php artisan key:generate
-
-Run the database migrations (**Set the database connection in .env before migrating**)
-
-    php artisan migrate
-
-
-## Database seeding
-
-**Populate the database with seed data with relationships which includes users, articles, comments, tags, favorites and follows. This can help you to quickly start testing the api or couple a frontend and start using it with ready content.**
-
-Run the database seeder and you're done
-
-    php artisan db:seed
-
-Start the local development server
-
-    php artisan serve
-
-You can now access the server at http://localhost:8000 
-
-## Usage
-
-Login with email admin@gmail.com, password '12345678'
 
 ## License
 
