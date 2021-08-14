@@ -15,7 +15,7 @@ Please check the official laravel installation guide for server requirements bef
 
 Clone the repository
 
-    https://github.com/scm-aunghtetmyatoo/OJT-Laravel7.git
+https://github.com/SulaeMonn/OJT-laravel-vuejs.git
 
 Switch to the repo folder
 
