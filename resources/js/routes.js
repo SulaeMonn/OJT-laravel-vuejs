@@ -1,7 +1,4 @@
 const Welcome = () => import('./components/Welcome.vue' /* webpackChunkName: "resource/js/components/welcome" */)
-// const CategoryList = () => import('./components/category/List.vue' /* webpackChunkName: "resource/js/components/category/list" */)
-// const CategoryCreate = () => import('./components/category/Add.vue' /* webpackChunkName: "resource/js/components/category/add" */)
-// const CategoryEdit = () => import('./components/category/Edit.vue' /* webpackChunkName: "resource/js/components/category/edit" */)
 const PostList = () => import('./components/post/List.vue')
 const PostCreate = () => import('./components/post/Add.vue')
 const PostEdit = () => import('./components/post/Edit.vue')
@@ -9,7 +6,8 @@ const PostUpload = () => import('./components/post/Upload.vue')
 const UserList = () => import('./components/user/List.vue')
 const UserCreate = () => import('./components/user/Add.vue')
 const UserEdit = () => import('./components/user/Edit.vue')
-
+const Login = () => import('./components/Login.vue')
+const User = () => import('./components/User.vue')
 
 export const routes = [
     {
@@ -17,21 +15,6 @@ export const routes = [
         path: '/',
         component: Welcome
     },
-    // {
-    //     name: 'categoryList',
-    //     path: '/category',
-    //     component: CategoryList
-    // },
-    // {
-    //     name: 'categoryEdit',
-    //     path: '/category/:id/edit',
-    //     component: CategoryEdit
-    // },
-    // {
-    //     name: 'categoryAdd',
-    //     path: '/category/add',
-    //     component: CategoryCreate
-    // },
     {
         name: 'postList',
         path: '/posts',
@@ -55,7 +38,17 @@ export const routes = [
     {
         name: 'userList',
         path: '/users',
-        component: UserList
+        component: UserList,
+        beforeEnter: (to, from, next) => {
+            
+            let auth = localStorage.getItem('auth');
+            if(auth){
+                next();
+            }else{
+                next('/login');
+            }
+
+        }
     },
     {
         name: 'userAdd',
@@ -67,4 +60,24 @@ export const routes = [
         path: '/user/:id/edit',
         component: UserEdit
     },
+    {
+        name: 'login',
+        path: '/login',
+        component: Login
+    },
+    {
+        name: "user",
+        path: '/user',
+        component: User,
+        beforeEnter: (to, from, next) => {
+            
+            let auth = localStorage.getItem('auth');
+            if(auth){
+                next();
+            }else{
+                next('/login');
+            }
+
+        }
+    }
 ]

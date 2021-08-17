@@ -1,58 +1,48 @@
 <template>
-    <div class="row">
-        <div class="form-row">
-            <div class="col-md-12">
-                <label class="form-control-label" for="input-file-import"
-                    >Upload Excel File</label
-                >
-                <input
-                    type="file"
-                    class="form-control"
-                    :class="{ ' is-invalid': error.message }"
-                    id="input-file-import"
-                    name="file_import"
-                    ref="import_file"
-                    @change="onFileChange"
-                />
-                <div v-if="error.message" class="invalid-feedback"></div>
-            </div>
-        </div>
-    </div>
+  <div>
+    <vue-dropzone
+      ref="myVueDropzone"
+      id="dropzone"
+      :options="dropzoneOptions"
+      :useCustomSlot="true"
+      v-on:vdropzone-success="uploadSuccess"
+      v-on:vdropzone-error="uploadError"
+      v-on:vdropzone-removed-file="fileRemoved"
+    >
+      <div class="dropzone-custom-content">
+        <h3 class="dropzone-custom-title">Drag and drop to upload content!</h3>
+        <div class="subtitle">...or click to select a file from your computer</div>
+      </div>
+    </vue-dropzone>
+  </div>
 </template>
+
 <script>
+import vue2Dropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
 export default {
-    data() {
-        return {
-            error: {},
-            import_file: ""
-        };
+  components: {
+    vueDropzone: vue2Dropzone
+  },
+  data() {
+    return { 
+      dropzoneOptions: {
+        url: "/api/import",
+        addRemoveLinks: true,
+        maxFiles: 4
+      },
+      fileName: ''
+    };
+  },
+  methods: {
+    uploadSuccess(file, response) {
+        console.log('File Successfully Uploaded with file name: ' + response.file);
+        this.fileName = response.file;
     },
-    methods: {
-        onFileChange(e) {
-            this.import_file = e.target.files[0];
-        },
-
-        proceedAction() {
-            let formData = new FormData();
-            formData.append("import_file", this.import_file);
-
-            axios
-                .post("/api/posts/import", formData, {
-                    headers: { "content-type": "multipart/form-data" }
-                })
-                .then(response => {
-                    if (response.status === 200) {
-                        // codes here after the file is upload successfully
-                        this.$router.push({ name: "postList" });
-                    }
-                })
-                .catch(error => {
-                    // code here when an upload is not valid
-                    this.uploading = false;
-                    this.error = error.response.data;
-                    console.log("check error: ", this.error);
-                });
-        }
-    }
+    uploadError(file, message) {
+        console.log('An Error Occurred');
+    },
+    fileRemoved() {}
+  }
 };
 </script>

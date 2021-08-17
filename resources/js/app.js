@@ -7,10 +7,13 @@ import VueRouter from 'vue-router';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 import {routes} from './routes';
+import excel from 'vue-excel-export';
+
  
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
+Vue.use(excel);
 
 const router = new VueRouter({
     mode: 'history',

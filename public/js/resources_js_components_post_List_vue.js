@@ -155,11 +155,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "posts",
   data: function data() {
     return {
-      search: '',
+      search: "",
       posts: {}
     };
   },
@@ -204,6 +216,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           console.log(error);
         });
       }
+    },
+    downloadpost: function downloadpost() {
+      axios.get('api/export', {
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', 'post.xlsx');
+        document.body.appendChild(fileLink);
+        fileLink.click();
+      });
     }
   }
 });
@@ -1101,6 +1125,22 @@ var render = function() {
             ],
             1
           ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.downloadpost()
+                  }
+                }
+              },
+              [_vm._v("\n                    Download\n                ")]
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-4" }, [
             _c(

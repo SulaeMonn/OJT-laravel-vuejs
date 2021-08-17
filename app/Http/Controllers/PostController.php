@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Imports\PostsImport;
+use App\Exports\PostsExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PostController extends Controller
@@ -62,14 +63,19 @@ class PostController extends Controller
 
     public function import(Request $request)
     {
-         $request->validate([
-            'import_file' => 'required|file|mimes:xls,xlsx'
+        //  $request->validate([
+        //     'import_file' => 'required|file|mimes:xls,xlsx'
+        // ]);
+        Excel::import(new PostsImport,request()->file('file'));
+           
+        return response()->json([
+            'message'=>'Post Upload Successfully!!'
         ]);
+    }
 
-        $path = $request->file('import_file');
-        $data = Excel::import(new PostsImport, $path);
-
-        return response()->json(['message' => 'uploaded successfully'], 200);
+    public function export() 
+    {
+        return Excel::download(new PostsExport, 'posts.xlsx');
     }
 
 }

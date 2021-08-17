@@ -18,9 +18,10 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::resource('post',PostController::class)->only(['index','store','show','update','destroy','import']);
+Route::resource('post',PostController::class)->only(['index','store','show','update','destroy']);
 Route::resource('user',UserController::class)->only(['index','store','show','update','destroy']);
-// Route::post('/posts/import','PostController@import');
+Route::post('/import','PostController@import');
+Route::get('/export','PostController@export');
 
 
 

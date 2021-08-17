@@ -17,6 +17,15 @@
                         >Upload</router-link
                     >
                 </div>
+                <div class="col-2">
+                    <button
+                        type="button"
+                        @click="downloadpost()"
+                        class="btn btn-primary"
+                    >
+                        Download
+                    </button>
+                </div>
                 <div class="col-4">
                     <form @submit.prevent="getPosts">
                         <div class="input-group">
@@ -118,7 +127,10 @@
                     </tr>
                 </tbody>
             </table>
-            <pagination :data="posts" @pagination-change-page="getPosts"></pagination>
+            <pagination
+                :data="posts"
+                @pagination-change-page="getPosts"
+            ></pagination>
         </div>
     </div>
 </template>
@@ -128,8 +140,8 @@ export default {
     name: "posts",
     data() {
         return {
-            search: '',
-            posts: {},
+            search: "",
+            posts: {}
         };
     },
     mounted() {
@@ -146,7 +158,7 @@ export default {
                     console.log(error);
                     this.posts = data;
                 });
-        }, 
+        },
         deletepost(id) {
             if (confirm("Are you sure to delete this post ?")) {
                 this.axios
@@ -158,6 +170,19 @@ export default {
                         console.log(error);
                     });
             }
+        },
+        downloadpost() {
+            axios.get('api/export', {
+                    responseType: 'arraybuffer'
+                })
+                .then(response => {
+                    var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+                    var fileLink = document.createElement('a');
+                    fileLink.href = fileURL;
+                    fileLink.setAttribute('download', 'post.xlsx');
+                    document.body.appendChild(fileLink);
+                    fileLink.click();
+                })
         }
     }
 };
