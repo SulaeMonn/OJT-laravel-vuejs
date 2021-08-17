@@ -11,19 +11,40 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label>Title</label>
-                                    <input type="text" class="form-control" v-model="post.title">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        v-model="post.title"
+                                        name="title"
+                                    />
+                                    <div
+                                        v-if="post.errors.has('title')"
+                                        v-html="post.errors.get('title')"
+                                        class="text-danger"
+                                    />
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <input type="text" class="form-control" v-model="post.description">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        v-model="post.description"
+                                    />
+                                    <div
+                                        v-if="post.errors.has('description')"
+                                        v-html="post.errors.get('description')"
+                                        class="text-danger"
+                                    />
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">
+                                    Save
+                                </button>
                             </div>
-                        </div>                        
+                        </div>
                     </form>
                 </div>
             </div>
@@ -32,25 +53,29 @@
 </template>
 
 <script>
+import { Form } from "vform";
+
 export default {
-    name:"add-post",
-    data(){
+    name: "add-post",
+    data() {
         return {
-            post:{
-                title:"",
-                description:""
-            }
-        }
-    },
-    methods:{
-        async create(){
-            await this.axios.post('/api/post',this.post)
-            .then(response=>{
-                this.$router.push({name:"postList"})
-            }).catch(error=>{
-                console.log(error)
+            post: new Form({
+                title: "",
+                description: ""
             })
+        };
+    },
+    methods: {
+        async create() {
+            await this.post
+                .post("/api/post")
+                .then(response => {
+                    this.$router.push({ name: "postList" });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     }
-}
+};
 </script>

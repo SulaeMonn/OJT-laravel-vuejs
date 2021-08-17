@@ -4,18 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use App\Imports\PostsImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PostController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::orderBy('id', 'desc')->get();
-        return response()->json($posts);
+        if($request->search){
+            return Post::where('title', 'like', '%' . $request->search . '%')
+            ->orderBy('id', 'desc')->paginate(5);
+        }else{
+            $posts = Post::orderBy('id', 'desc')->paginate(5);
+            return response()->json($posts);
+        }
     }
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'required|unique:posts',
+            'description' => 'required',
+        ]);
         $post = Post::create($request->post());
         return response()->json([
             'message'=>'Post Created Successfully!!',
@@ -30,6 +41,10 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post)
     {
+        $this->validate($request, [
+            'title' => 'required',
+            'description' => 'required',
+        ]);
         $post->fill($request->post())->save();
         return response()->json([
             'message'=>'Post Updated Successfully!!',
@@ -44,4 +59,17 @@ class PostController extends Controller
             'message'=>'Post Deleted Successfully!!'
         ]);
     }
+
+    public function import(Request $request)
+    {
+         $request->validate([
+            'import_file' => 'required|file|mimes:xls,xlsx'
+        ]);
+
+        $path = $request->file('import_file');
+        $data = Excel::import(new PostsImport, $path);
+
+        return response()->json(['message' => 'uploaded successfully'], 200);
+    }
+
 }

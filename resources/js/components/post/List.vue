@@ -10,10 +10,18 @@
                         >Create</router-link
                     >
                 </div>
+                <div class="col-2">
+                    <router-link
+                        :to="{ name: 'postUpload' }"
+                        class="btn btn-success"
+                        >Upload</router-link
+                    >
+                </div>
                 <div class="col-4">
-                    <form action="">
+                    <form @submit.prevent="getPosts">
                         <div class="input-group">
                             <input
+                                v-model="search"
                                 type="text"
                                 class="form-control"
                                 placeholder="Search"
@@ -83,8 +91,8 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody v-if="posts.length > 0">
-                    <tr v-for="(post, key) in posts" :key="key">
+                <tbody>
+                    <tr v-for="post in posts.data" :key="post.id">
                         <td>{{ post.id }}</td>
                         <td>{{ post.title }}</td>
                         <td>{{ post.description }}</td>
@@ -109,14 +117,8 @@
                         </td>
                     </tr>
                 </tbody>
-                <tbody v-else>
-                    <tr>
-                        <td colspan="4" align="center">
-                            No posts Found.
-                        </td>
-                    </tr>
-                </tbody>
             </table>
+            <pagination :data="posts" @pagination-change-page="getPosts"></pagination>
         </div>
     </div>
 </template>
@@ -126,22 +128,23 @@ export default {
     name: "posts",
     data() {
         return {
-            posts: []
+            search: '',
+            posts: {},
         };
     },
     mounted() {
         this.getPosts();
     },
     methods: {
-        async getPosts() {
+        async getPosts(page = 1) {
             await this.axios
-                .get("/api/post")
+                .get(`/api/post?page= + ${page} & search=${this.search}`)
                 .then(response => {
                     this.posts = response.data;
                 })
                 .catch(error => {
                     console.log(error);
-                    this.posts = [];
+                    this.posts = data;
                 });
         }, 
         deletepost(id) {

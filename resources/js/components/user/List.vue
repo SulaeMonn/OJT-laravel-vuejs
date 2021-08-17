@@ -11,9 +11,10 @@
                     >
                 </div>
                 <div class="col-4">
-                    <form action="">
+                    <form @submit.prevent="getUsers">
                         <div class="input-group">
                             <input
+                                v-model="search"
                                 type="text"
                                 class="form-control"
                                 placeholder="Search"
@@ -81,15 +82,21 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>phone</th>
+                        <th>Date of Birth</th>
+                        <th>Address</th>
+                        <th>Profile</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody v-if="users.length > 0">
-                    <tr v-for="(user, key) in users" :key="key">
+                <tbody>
+                    <tr v-for="(user, key) in users.data" :key="key">
                         <td>{{ user.id }}</td>
                         <td>{{ user.name }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.phone }}</td>
+                        <td>{{ user.dob }}</td>
+                        <td>{{ user.address }}</td>
+                        <td><img :src="path + user.profile" height="200px" width="180px"></td>
                         <td>
                             <router-link
                                 :to="{
@@ -111,14 +118,18 @@
                         </td>
                     </tr>
                 </tbody>
-                <tbody v-else>
+                <!-- <tbody >
                     <tr>
                         <td colspan="4" align="center">
                             No users Found.
                         </td>
                     </tr>
-                </tbody>
+                </tbody> -->
             </table>
+            <pagination
+                :data="users"
+                @pagination-change-page="getUsers"
+            ></pagination>
         </div>
     </div>
 </template>
@@ -128,16 +139,22 @@ export default {
     name: "users",
     data() {
         return {
-            users: []
+            search: "",
+            users: {},
+            path: "storage/uploads/"
         };
     },
     mounted() {
         this.getUsers();
     },
     methods: {
-        async getUsers() {
+        // searchUser() {
+        //     axios.get('/api/user?search=' + this.search)
+        //     .then(response => this.users = response.data)
+        // },
+        async getUsers(page = 1) {
             await this.axios
-                .get("/api/user")
+                .get(`/api/user?page= + ${page} & search=${this.search}`)
                 .then(response => {
                     this.users = response.data;
                 })
@@ -145,7 +162,7 @@ export default {
                     console.log(error);
                     this.users = [];
                 });
-        }, 
+        },
         deleteuser(id) {
             if (confirm("Are you sure to delete this user ?")) {
                 this.axios

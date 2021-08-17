@@ -11,19 +11,39 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label>Title</label>
-                                    <input type="text" class="form-control" v-model="post.title">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        v-model="post.title"
+                                    />
+                                     <div
+                                        v-if="post.errors.has('title')"
+                                        v-html="post.errors.get('title')"
+                                        class="text-danger"
+                                    />
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <input type="text" class="form-control" v-model="post.description">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        v-model="post.description"
+                                    />
+                                     <div
+                                        v-if="post.errors.has('description')"
+                                        v-html="post.errors.get('description')"
+                                        class="text-danger"
+                                    />
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn btn-primary">
+                                    Update
+                                </button>
                             </div>
-                        </div>                        
+                        </div>
                     </form>
                 </div>
             </div>
@@ -32,37 +52,46 @@
 </template>
 
 <script>
+
+import { Form } from "vform";
+
 export default {
-    name:"update-post",
-    data(){
+    name: "update-post",
+    data() {
         return {
-            post:{
-                title:"",
-                description:"",
-                _method:"patch"
-            }
-        }
-    },
-    mounted(){
-        this.showPost()
-    },
-    methods:{
-        async showPost(){
-            await this.axios.get(`/api/post/${this.$route.params.id}`).then(response=>{
-                const { title, description } = response.data
-                this.post.title = title
-                this.post.description = description
-            }).catch(error=>{
-                console.log(error)
+            post: new Form({
+                title: "",
+                description: "",
+                _method: "patch"
             })
+        };
+    },
+    mounted() {
+        this.showPost();
+    },
+    methods: {
+        async showPost() {
+            await this.axios
+                .get(`/api/post/${this.$route.params.id}`)
+                .then(response => {
+                    const { title, description } = response.data;
+                    this.post.title = title;
+                    this.post.description = description;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
-        async update(){
-            await this.axios.post(`/api/post/${this.$route.params.id}`,this.post).then(response=>{
-                this.$router.push({name:"postList"})
-            }).catch(error=>{
-                console.log(error)
-            })
+        async update() {
+            await this.post
+                .post(`/api/post/${this.$route.params.id}`)
+                .then(response => {
+                    this.$router.push({ name: "postList" });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     }
-}
+};
 </script>

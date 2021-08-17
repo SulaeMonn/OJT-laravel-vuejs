@@ -153,11 +153,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "posts",
   data: function data() {
     return {
-      posts: []
+      search: '',
+      posts: {}
     };
   },
   mounted: function mounted() {
@@ -165,22 +168,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     getPosts: function getPosts() {
-      var _this = this;
+      var _arguments = arguments,
+          _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var page;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return _this.axios.get("/api/post").then(function (response) {
+                page = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : 1;
+                _context.next = 3;
+                return _this.axios.get("/api/post?page= + ".concat(page, " & search=").concat(_this.search)).then(function (response) {
                   _this.posts = response.data;
                 })["catch"](function (error) {
                   console.log(error);
-                  _this.posts = [];
+                  _this.posts = data;
                 });
 
-              case 2:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -1057,89 +1063,152 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-12" }, [
-      _c("h4", [_vm._v("Post List")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row mb-2 justify-content-between" }, [
-        _c(
-          "div",
-          { staticClass: "col-2" },
-          [
+    _c(
+      "div",
+      { staticClass: "col-12" },
+      [
+        _c("h4", [_vm._v("Post List")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2 justify-content-between" }, [
+          _c(
+            "div",
+            { staticClass: "col-2" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { to: { name: "postAdd" } }
+                },
+                [_vm._v("Create")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-2" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { to: { name: "postUpload" } }
+                },
+                [_vm._v("Upload")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4" }, [
             _c(
-              "router-link",
+              "form",
               {
-                staticClass: "btn btn-success",
-                attrs: { to: { name: "postAdd" } }
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.getPosts.apply(null, arguments)
+                  }
+                }
               },
-              [_vm._v("Create")]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _vm._m(0)
-      ]),
-      _vm._v(" "),
-      _c("table", { staticClass: "table" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _vm.posts.length > 0
-          ? _c(
-              "tbody",
-              _vm._l(_vm.posts, function(post, key) {
-                return _c("tr", { key: key }, [
-                  _c("td", [_vm._v(_vm._s(post.id))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(post.title))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(post.description))]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-success",
-                          attrs: {
-                            to: {
-                              name: "postEdit",
-                              params: { id: post.id }
-                            }
-                          }
-                        },
-                        [_vm._v("Edit")]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "button",
+              [
+                _c("div", { staticClass: "input-group" }, [
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass: "btn btn-danger",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.deletepost(post.id)
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.search,
+                        expression: "search"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Search" },
+                    domProps: { value: _vm.search },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.search = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(0)
+                ])
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("table", { staticClass: "table" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.posts.data, function(post) {
+              return _c("tr", { key: post.id }, [
+                _c("td", [_vm._v(_vm._s(post.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.title))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post.description))]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-success",
+                        attrs: {
+                          to: {
+                            name: "postEdit",
+                            params: { id: post.id }
                           }
                         }
                       },
-                      [
-                        _vm._v(
-                          "\n                            Delete\n                        "
-                        )
-                      ]
+                      [_vm._v("Edit")]
                     )
-                  ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deletepost(post.id)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Delete\n                        "
+                      )
+                    ]
+                  )
                 ])
-              }),
-              0
-            )
-          : _c("tbody", [_vm._m(2)])
-      ])
-    ])
+              ])
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _c("pagination", {
+          attrs: { data: _vm.posts },
+          on: { "pagination-change-page": _vm.getPosts }
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -1147,27 +1216,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4" }, [
-      _c("form", { attrs: { action: "" } }, [
-        _c("div", { staticClass: "input-group" }, [
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Search" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group-append" }, [
-            _c(
-              "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-              [
-                _vm._v(
-                  "\n                                Search\n                            "
-                )
-              ]
-            )
-          ])
-        ])
-      ])
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [
+          _vm._v(
+            "\n                                Search\n                            "
+          )
+        ]
+      )
     ])
   },
   function() {
@@ -1183,18 +1241,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Description")]),
         _vm._v(" "),
         _c("th", [_vm._v("Actions")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { attrs: { colspan: "4", align: "center" } }, [
-        _vm._v(
-          "\n                        No posts Found.\n                    "
-        )
       ])
     ])
   }
