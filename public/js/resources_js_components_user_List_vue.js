@@ -152,20 +152,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "users",
   data: function data() {
@@ -213,13 +199,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteuser: function deleteuser(id) {
       var _this2 = this;
 
-      if (confirm("Are you sure to delete this user ?")) {
-        this.axios["delete"]("/api/user/".concat(id)).then(function (response) {
-          _this2.getUsers();
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
+      Swal.fire({
+        title: "Are you sure?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Delete"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          _this2.axios["delete"]("/api/user/".concat(id)).then(function (response) {
+            _this2.getUsers();
+
+            Swal.fire({
+              title: "Deleted",
+              icon: "success"
+            });
+          });
+        }
+      }); //   if (confirm("Are you sure to delete this user ?")) {
+      //     this.axios
+      //       .delete(`/api/user/${id}`)
+      //       .then((response) => {
+      //         this.getUsers();
+      //       })
+      //       .catch((error) => {
+      //         console.log(error);
+      //       });
+      //   }
     }
   }
 });
@@ -1163,16 +1170,6 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(user.address))]),
                 _vm._v(" "),
-                _c("td", [
-                  _c("img", {
-                    attrs: {
-                      src: _vm.path + user.profile,
-                      height: "200px",
-                      width: "180px"
-                    }
-                  })
-                ]),
-                _vm._v(" "),
                 _c(
                   "td",
                   [
@@ -1205,11 +1202,7 @@ var render = function() {
                         }
                       }
                     },
-                    [
-                      _vm._v(
-                        "\n                            Delete\n                        "
-                      )
-                    ]
+                    [_vm._v("\n              Delete\n            ")]
                   )
                 ])
               ])
@@ -1236,11 +1229,7 @@ var staticRenderFns = [
       _c(
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [
-          _vm._v(
-            "\n                                Search\n                            "
-          )
-        ]
+        [_vm._v("Search")]
       )
     ])
   },
@@ -1261,8 +1250,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Date of Birth")]),
         _vm._v(" "),
         _c("th", [_vm._v("Address")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Profile")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])

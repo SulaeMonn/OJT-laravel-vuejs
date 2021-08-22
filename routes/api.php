@@ -22,6 +22,8 @@ Route::resource('post',PostController::class)->only(['index','store','show','upd
 Route::resource('user',UserController::class)->only(['index','store','show','update','destroy']);
 Route::post('/import','PostController@import');
 Route::get('/export','PostController@export');
+Route::post('/login','LoginController@login');
+
 
 
 

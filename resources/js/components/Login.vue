@@ -4,14 +4,29 @@
       <div class="col-md-4">
         <div class="card">
           <div class="card-body">
-            <div class="alert alert-danger" v-if="message">{{ message }}</div>
+            <div class="alert alert-danger" v-if="message">
+              {{ message }}
+            </div>
             <h3>Login</h3>
             <form @submit.prevent="login">
               <div class="form-group">
-                <input type="text" v-model="email" class="form-control" placeholder="Email">
+                <input
+                  type="text"
+                  v-model="email"
+                  class="form-control"
+                  placeholder="Email"
+                  name="email"
+                />
               </div>
               <div class="form-group">
-                <input type="password" v-model="password" class="form-control" placeholder="Password">
+                <input
+                  type="password"
+                  v-model="password"
+                  class="form-control"
+                  placeholder="Password"
+                  id="password"
+                  name="password"
+                />
               </div>
               <button type="submit" class="btn btn-primary btn-block">
                 Login
@@ -19,7 +34,10 @@
             </form>
           </div>
           <div class="card-footer">
-            <small><span class="muted">Don't have an account?</span> <a href="#">Register</a></small>
+            <small
+              ><span class="muted">Don't have an account?</span>
+              <a href="#">Register</a></small
+            >
           </div>
         </div>
       </div>
@@ -29,27 +47,38 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
       email: "",
       password: "",
-      message: ""
-    }
+      message: "",
+    };
   },
 
   methods: {
     login() {
-      if(this.email == "admin@gmail.com" && this.password == "12345678"){
-        //login success
-        localStorage.setItem('auth', this.email);
-        this.$router.push('/posts');
-      }else {
-        //login fail
-        this.message = "Email or password is invaild!"
+      if (!this.email) {
+        this.message = "Email required";
       }
-    }
-  }
-
-}
+      if (!this.password) {
+        this.message = "Password required";
+      } else {
+        this.axios
+          .post("/api/login", {
+            email: this.email,
+            password: this.password,
+          })
+          .then((response) => {
+            this.$store.commit("LOGIN", true);
+            localStorage.setItem("token", response.data.token);
+            this.$router.push({ name: "postList" });
+          })
+          .catch((error) => {
+            console.log(response.error);
+          });
+      }
+    },
+  },
+};
 </script>

@@ -5,7 +5,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
 use Cookie;
-class AuthController extends Controller
+class LoginController extends Controller
 {
     use AuthenticatesUsers;
     public function __construct()
@@ -14,13 +14,13 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {
+    { 
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
-        $credentials = request(['email', 'password']);
-        if (Auth::attempt($credentials)) {
+        // $credentials = request(['email', 'password']);
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
             $token =  $user->createToken('Personal Access Token')->accessToken;
             $cookie = $this->getCookieDetails($token);
@@ -31,8 +31,10 @@ class AuthController extends Controller
                 ], 200)
                 ->cookie($cookie['name'], $cookie['value'], $cookie['minutes'], $cookie['path'], $cookie['domain'], $cookie['secure'], $cookie['httponly'], $cookie['samesite']);
         } else {
-            return response()->json(
-                ['error' => 'invalid-credentials'], 422);
+            return response()->json([
+                'status' => 'error',
+                'user'   => 'Unauthorized Access'
+              ]); 
         }
     }
 
@@ -51,12 +53,12 @@ class AuthController extends Controller
         ];
     }
     
-    public function logout(Request $request)
-    {
-        $request->user()->token()->revoke();
-        $cookie = Cookie::forget('_token');
-        return response()->json([
-            'message' => 'successful-logout'
-        ])->withCookie($cookie);
-    }
+    // public function logout(Request $request)
+    // {
+    //     $request->user()->token()->revoke();
+    //     $cookie = Cookie::forget('_token');
+    //     return response()->json([
+    //         'message' => 'successful-logout'
+    //     ])->withCookie($cookie);
+    // }
 }

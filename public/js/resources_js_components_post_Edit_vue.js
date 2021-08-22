@@ -82,8 +82,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "update-post",
@@ -139,6 +137,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this2.post.post("/api/post/".concat(_this2.$route.params.id)).then(function (response) {
                   _this2.$router.push({
                     name: "postList"
+                  });
+
+                  Toast.fire({
+                    icon: "success",
+                    title: "Updated successfully"
                   });
                 })["catch"](function (error) {
                   console.log(error);
@@ -1149,11 +1152,7 @@ var staticRenderFns = [
       _c(
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [
-          _vm._v(
-            "\n                                Update\n                            "
-          )
-        ]
+        [_vm._v("Update")]
       )
     ])
   }

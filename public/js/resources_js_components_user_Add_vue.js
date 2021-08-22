@@ -158,6 +158,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "add-user",
@@ -203,6 +222,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.user.post("/api/user", formData).then(function (response) {
                   _this.$router.push({
                     name: "userList"
+                  });
+
+                  Toast.fire({
+                    icon: "success",
+                    title: "Created successfully"
                   });
                 })["catch"](function (error) {
                   console.log(error);
@@ -1461,11 +1485,7 @@ var staticRenderFns = [
       _c(
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [
-          _vm._v(
-            "\n                                Save\n                            "
-          )
-        ]
+        [_vm._v("Save")]
       )
     ])
   }

@@ -40,8 +40,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'Login',
+  name: "Login",
   data: function data() {
     return {
       email: "",
@@ -51,13 +69,29 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     login: function login() {
-      if (this.email == "admin@gmail.com" && this.password == "12345678") {
-        //login success
-        localStorage.setItem('auth', this.email);
-        this.$router.push('/posts');
+      var _this = this;
+
+      if (!this.email) {
+        this.message = "Email required";
+      }
+
+      if (!this.password) {
+        this.message = "Password required";
       } else {
-        //login fail
-        this.message = "Email or password is invaild!";
+        this.axios.post("/api/login", {
+          email: this.email,
+          password: this.password
+        }).then(function (response) {
+          _this.$store.commit("LOGIN", true);
+
+          localStorage.setItem("token", response.data.token);
+
+          _this.$router.push({
+            name: "postList"
+          });
+        })["catch"](function (error) {
+          console.log(response.error);
+        });
       }
     }
   }
@@ -156,7 +190,9 @@ var render = function() {
           _c("div", { staticClass: "card-body" }, [
             _vm.message
               ? _c("div", { staticClass: "alert alert-danger" }, [
-                  _vm._v(_vm._s(_vm.message))
+                  _vm._v(
+                    "\n            " + _vm._s(_vm.message) + "\n          "
+                  )
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -184,7 +220,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "Email" },
+                    attrs: {
+                      type: "text",
+                      placeholder: "Email",
+                      name: "email"
+                    },
                     domProps: { value: _vm.email },
                     on: {
                       input: function($event) {
@@ -208,7 +248,12 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "password", placeholder: "Password" },
+                    attrs: {
+                      type: "password",
+                      placeholder: "Password",
+                      id: "password",
+                      name: "password"
+                    },
                     domProps: { value: _vm.password },
                     on: {
                       input: function($event) {

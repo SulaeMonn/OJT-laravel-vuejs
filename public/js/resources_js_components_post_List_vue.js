@@ -154,19 +154,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "posts",
   data: function data() {
@@ -209,22 +196,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deletepost: function deletepost(id) {
       var _this2 = this;
 
-      if (confirm("Are you sure to delete this post ?")) {
-        this.axios["delete"]("/api/post/".concat(id)).then(function (response) {
-          _this2.getPosts();
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
+      Swal.fire({
+        title: "Are you sure?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Delete"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          _this2.axios["delete"]("/api/post/".concat(id)).then(function (response) {
+            _this2.getPosts();
+
+            Swal.fire({
+              title: "Deleted",
+              icon: "success"
+            });
+          });
+        }
+      });
     },
     downloadpost: function downloadpost() {
-      axios.get('api/export', {
-        responseType: 'arraybuffer'
+      axios.get("api/export", {
+        responseType: "arraybuffer"
       }).then(function (response) {
         var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        var fileLink = document.createElement('a');
+        var fileLink = document.createElement("a");
         fileLink.href = fileURL;
-        fileLink.setAttribute('download', 'post.xlsx');
+        fileLink.setAttribute("download", "post.xlsx");
         document.body.appendChild(fileLink);
         fileLink.click();
       });
@@ -1138,7 +1137,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("\n                    Download\n                ")]
+              [_vm._v("\n          Download\n        ")]
             )
           ]),
           _vm._v(" "),
@@ -1229,11 +1228,7 @@ var render = function() {
                         }
                       }
                     },
-                    [
-                      _vm._v(
-                        "\n                            Delete\n                        "
-                      )
-                    ]
+                    [_vm._v("\n              Delete\n            ")]
                   )
                 ])
               ])
@@ -1260,11 +1255,7 @@ var staticRenderFns = [
       _c(
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [
-          _vm._v(
-            "\n                                Search\n                            "
-          )
-        ]
+        [_vm._v("Search")]
       )
     ])
   },

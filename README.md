@@ -13,12 +13,17 @@
 ## Contents
 * Users page
 * Post page
+* Login
+* Logout
 
 ## Users
 * Include Add, Update, Delete, Search and show all user data 
 
 ## Post
 * Include Add, Update, Delete, Search and show all posts
+
+## Login
+* You can login with email "admin@gmail.com" and password "12345678"
 
 ## User profile
 * Show login user profile (name, email, type, profile, etc.)

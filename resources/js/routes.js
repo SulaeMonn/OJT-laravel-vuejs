@@ -41,7 +41,7 @@ export const routes = [
         component: UserList,
         beforeEnter: (to, from, next) => {
             
-            let auth = localStorage.getItem('auth');
+            let auth = localStorage.getItem('token');
             if(auth){
                 next();
             }else{
@@ -71,7 +71,7 @@ export const routes = [
         component: User,
         beforeEnter: (to, from, next) => {
             
-            let auth = localStorage.getItem('auth');
+            let auth = localStorage.getItem('token');
             if(auth){
                 next();
             }else{

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -32,7 +33,7 @@ class UserController extends Controller
             'phone' => 'required',
             'dob' => 'required',
             'address' => 'required',
-            'profile' => 'required',
+            // 'profile' => 'required',
         ]);
         $user = new User();
         if($request->hasFile('profile'))
@@ -63,6 +64,7 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        // $user = Auth::User($id);
         return response()->json($user);
     }
 
@@ -71,11 +73,11 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email',
-            'type' => 'required',
+            // 'type' => 'required',
             'phone' => 'required',
             'dob' => 'required',
             'address' => 'required',
-            'profile' => 'required',
+            // 'profile' => 'required',
         ]);
         $user->fill($request->post())->save();
         return response()->json([
